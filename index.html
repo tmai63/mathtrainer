@@ -24,10 +24,6 @@
       <p id="answerField"></p>
     </div>
     <script>
-<<<<<<< HEAD
-=======
-
->>>>>>> c8ecdc3466b505c026957d5620663828f0460fe0
       let newgame;
 
       class Game {
@@ -96,11 +92,7 @@
       }
 
       function rand(lower, upper) {
-<<<<<<< HEAD
         return Math.floor(Math.random() * (upper - lower + 1)) + +lower
-=======
-        return Math.floor(Math.random() * (upper - lower + 1) + lower);
->>>>>>> c8ecdc3466b505c026957d5620663828f0460fe0
       }
 
       function createNewGame() {
@@ -115,29 +107,5 @@
         );
       }
     </script>
-<<<<<<< HEAD
-=======
-  </head>
-  <body>
-    <div>
-      Set lower limit:
-      <input type="number" id="lower_bound_field" value="1" size="5" />
-      <br />
-      Set upper limit:
-      <input type="number" id="upper_bound_field" value="20" size="5" />
-      <br />
-      <button type="button" onclick="createNewGame()">Set Values</button>
-      <br />
-      <button
-        type="button"
-        onclick="newgame.generateQuestion(newgame.lower_bound, newgame.upper_bound)">
-        Generate Question
-      </button>
-      <br>
-      <p id="questionField"></p>
-      <br>
-      <p id="answerField"></p>
-    </div>
->>>>>>> c8ecdc3466b505c026957d5620663828f0460fe0
   </body>
 </html>
