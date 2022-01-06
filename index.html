@@ -1,0 +1,111 @@
+<html>
+  <head>
+    <title>Mental Math Trainer</title>
+    <script>
+      let newgame;
+
+      class Game {
+        constructor(time, add, sub, mul, div, lower_bound, upper_bound) {
+          this.time = time;
+          this.add = add;
+          this.sub = sub;
+          this.mul = mul;
+          this.div = div;
+          this.lower_bound = lower_bound;
+          this.upper_bound = upper_bound;
+        }
+
+        generateQuestion(lb, ub) {
+          var q = new Question(lb, ub)
+          this.displayquestion(q)
+        }
+
+        displayquestion(q) {
+          document.getElementById("questionField").innerText = q.questiontext;
+          document.getElementById("answerField").innerText = q.answer;
+        }
+      }
+
+      class Question {
+        constructor(lb, ub) {
+          this.lb = lb;
+          this.ub = ub;
+          this.operation = rand(1,4);
+          this.questiontext = ""
+          this.answer = 0
+          this.makeQuestion(this.lb, this.ub, this.operation)
+        }
+
+        makeQuestion(lb, ub, operation) {
+          var first_num, second_num
+          if (operation == 1) {
+            first_num = rand(lb, ub);
+            second_num = rand(lb, ub);
+            this.questiontext = first_num + " + " + second_num;
+            this.answer = first_num + second_num
+          } else if (operation == 2) {
+            first_num = rand(lb, ub);
+            second_num = rand(lb, ub);
+            while (first_num <= second_num) {
+              first_num = rand(lb, ub);
+            }
+            this.questiontext = first_num + " - " + second_num;
+            this.answer = first_num - second_num
+          } else if (operation == 3) {
+            first_num = rand(lb, ub);
+            second_num = rand(lb, ub);
+            this.questiontext = first_num + " \xD7 " + second_num;
+            this.answer = first_num * second_num
+          } else {
+            first_num = rand(lb, ub);
+            second_num = rand(lb, ub);
+            while (first_num % second_num != 0) {
+              first_num = rand(lb, ub);
+            }
+            this.questiontext = first_num + " \xF7 " + second_num;
+            this.answer = first_num / second_num
+          }
+        }
+
+      }
+
+      function rand(lower, upper) {
+        return Math.floor(Math.random() * (upper - lower + 1)) + +lower
+      }
+
+      function createNewGame() {
+        newgame = new Game(
+          120,
+          true,
+          true,
+          false,
+          false,
+          document.getElementById("lower_bound_field").value,
+          document.getElementById("upper_bound_field").value
+        );
+      }
+    </script>
+  </head>
+  <body>
+    <div>
+      Set lower limit:
+      <input type="number" id="lower_bound_field" value="1" size="5" />
+      <br />
+      Set upper limit:
+      <input type="number" id="upper_bound_field" value="20" size="5" />
+      <br />
+      <button type="button" onclick="createNewGame()">Set Values</button>
+      <br />
+      <button
+        type="button"
+        onclick="newgame.generateQuestion(newgame.lower_bound, newgame.upper_bound)"
+      >
+        Generate Question
+      </button>
+      <br />
+      <p id="questionField"></p>
+      <br>
+      <p id="answerField"></p>
+    </div>
+  </body>
+</html>
