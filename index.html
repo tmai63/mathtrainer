@@ -2,7 +2,12 @@
   <head>
     <title>Mental Math Trainer</title>
     <script>
+<<<<<<< HEAD
       let newgame;
+=======
+
+        let newgame
+>>>>>>> ccca941ef0381152c33f414f382b916c7f4b2d47
 
       class Game {
         constructor(time, add, sub, mul, div, lower_bound, upper_bound) {
@@ -16,6 +21,7 @@
         }
 
         generateQuestion(lb, ub) {
+<<<<<<< HEAD
           var q = new Question(lb, ub)
           this.displayquestion(q)
         }
@@ -71,6 +77,21 @@
 
       function rand(lower, upper) {
         return Math.floor(Math.random() * (upper - lower + 1)) + +lower
+=======
+          var first_num = rand(lb, ub);
+          var second_num = rand(lb, ub);
+          var question = first_num + " + " + second_num;
+          this.displayquestion(question);
+        }
+
+        displayquestion(s) {
+          document.getElementById("questionField").innerText = s;
+        }
+      }
+
+      function rand(lower, upper) {
+        return Math.floor(Math.random() * (upper - lower + 1) + lower);
+>>>>>>> ccca941ef0381152c33f414f382b916c7f4b2d47
       }
 
       function createNewGame() {
@@ -104,8 +125,11 @@
       </button>
       <br />
       <p id="questionField"></p>
+<<<<<<< HEAD
       <br>
       <p id="answerField"></p>
+=======
+>>>>>>> ccca941ef0381152c33f414f382b916c7f4b2d47
     </div>
   </body>
 </html>
