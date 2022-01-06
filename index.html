@@ -16,12 +16,14 @@
         type="button"
         onclick="newgame.generateQuestion(newgame.lower_bound, newgame.upper_bound)"
       >
-        Generate Question
+        Start Game
       </button>
       <br />
       <p id="questionField"></p>
       <br>
-      <p id="answerField"></p>
+      <input id="answerField" size="5"/>
+      <br>
+      <button type="button" onclick="newgame.checkAnswer()">Check Answer</button>
     </div>
     <script>
       let newgame;
@@ -35,16 +37,25 @@
           this.div = div;
           this.lower_bound = lower_bound;
           this.upper_bound = upper_bound;
+          var q
         }
 
         generateQuestion(lb, ub) {
-          var q = new Question(lb, ub)
-          this.displayquestion(q)
+          this.q = new Question(lb, ub)
+          this.displayquestion(this.q)
+          document.getElementById("answerField").value = ""
+          document.getElementById("answerField").focus()
         }
 
         displayquestion(q) {
-          document.getElementById("questionField").innerText = q.questiontext;
-          document.getElementById("answerField").innerText = q.answer;
+          document.getElementById("questionField").innerText = this.q.questiontext;
+        }
+
+        checkAnswer() {
+          var userinput = document.getElementById("answerField").value
+          if (userinput == this.q.answer) {
+            this.generateQuestion(this.lower_bound,this.upper_bound)
+          }
         }
       }
 
