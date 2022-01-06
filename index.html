@@ -1,13 +1,30 @@
 <html>
   <head>
     <title>Mental Math Trainer</title>
+  </head>
+  <body>
+    <div>
+      Set lower limit:
+      <input type="number" id="lower_bound_field" value="1" size="5" />
+      <br />
+      Set upper limit:
+      <input type="number" id="upper_bound_field" value="20" size="5" />
+      <br />
+      <button type="button" onclick="createNewGame()">Set Values</button>
+      <br />
+      <button
+        type="button"
+        onclick="newgame.generateQuestion(newgame.lower_bound, newgame.upper_bound)"
+      >
+        Generate Question
+      </button>
+      <br />
+      <p id="questionField"></p>
+      <br>
+      <p id="answerField"></p>
+    </div>
     <script>
-<<<<<<< HEAD
       let newgame;
-=======
-
-        let newgame
->>>>>>> ccca941ef0381152c33f414f382b916c7f4b2d47
 
       class Game {
         constructor(time, add, sub, mul, div, lower_bound, upper_bound) {
@@ -21,7 +38,6 @@
         }
 
         generateQuestion(lb, ub) {
-<<<<<<< HEAD
           var q = new Question(lb, ub)
           this.displayquestion(q)
         }
@@ -77,21 +93,6 @@
 
       function rand(lower, upper) {
         return Math.floor(Math.random() * (upper - lower + 1)) + +lower
-=======
-          var first_num = rand(lb, ub);
-          var second_num = rand(lb, ub);
-          var question = first_num + " + " + second_num;
-          this.displayquestion(question);
-        }
-
-        displayquestion(s) {
-          document.getElementById("questionField").innerText = s;
-        }
-      }
-
-      function rand(lower, upper) {
-        return Math.floor(Math.random() * (upper - lower + 1) + lower);
->>>>>>> ccca941ef0381152c33f414f382b916c7f4b2d47
       }
 
       function createNewGame() {
@@ -106,30 +107,5 @@
         );
       }
     </script>
-  </head>
-  <body>
-    <div>
-      Set lower limit:
-      <input type="number" id="lower_bound_field" value="1" size="5" />
-      <br />
-      Set upper limit:
-      <input type="number" id="upper_bound_field" value="20" size="5" />
-      <br />
-      <button type="button" onclick="createNewGame()">Set Values</button>
-      <br />
-      <button
-        type="button"
-        onclick="newgame.generateQuestion(newgame.lower_bound, newgame.upper_bound)"
-      >
-        Generate Question
-      </button>
-      <br />
-      <p id="questionField"></p>
-<<<<<<< HEAD
-      <br>
-      <p id="answerField"></p>
-=======
->>>>>>> ccca941ef0381152c33f414f382b916c7f4b2d47
-    </div>
   </body>
 </html>
