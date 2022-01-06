@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <title>Mental Math Trainer</title>
+    <script>
+
+        let newgame
+
+      class Game {
+        constructor(time, add, sub, mul, div, lower_bound, upper_bound) {
+          this.time = time;
+          this.add = add;
+          this.sub = sub;
+          this.mul = mul;
+          this.div = div;
+          this.lower_bound = lower_bound;
+          this.upper_bound = upper_bound;
+        }
+
+        generateQuestion(lb, ub) {
+          var first_num = rand(lb, ub);
+          var second_num = rand(lb, ub);
+          var question = first_num + " + " + second_num;
+          this.displayquestion(question);
+        }
+
+        displayquestion(s) {
+          document.getElementById("questionField").innerText = s;
+        }
+      }
+
+      function rand(lower, upper) {
+        return Math.floor(Math.random() * (upper - lower + 1) + lower);
+      }
+
+      function createNewGame() {
+        newgame = new Game(
+          120,
+          true,
+          true,
+          false,
+          false,
+          document.getElementById("lower_bound_field").value,
+          document.getElementById("upper_bound_field").value
+        );
+      }
+    </script>
+  </head>
+  <body>
+    <div>
+      Set lower limit:
+      <input type="number" id="lower_bound_field" value="1" size="5" />
+      <br />
+      Set upper limit:
+      <input type="number" id="upper_bound_field" value="20" size="5" />
+      <br />
+      <button type="button" onclick="createNewGame()">Set Values</button>
+      <br />
+      <button
+        type="button"
+        onclick="newgame.generateQuestion(newgame.lower_bound, newgame.upper_bound)"
+      >
+        Generate Question
+      </button>
+      <br />
+      <p id="questionField"></p>
+    </div>
+  </body>
+</html>
