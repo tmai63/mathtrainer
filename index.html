@@ -4,27 +4,38 @@
   </head>
   <body>
     <div>
+      Set time:
+      <input type="number" id="time_field" value="60" size="5" />
+      <br />
       Set lower limit:
       <input type="number" id="lower_bound_field" value="1" size="5" />
       <br />
       Set upper limit:
       <input type="number" id="upper_bound_field" value="20" size="5" />
       <br />
-      <button type="button" onclick="createNewGame()">Set Values</button>
-      <br />
-      <button
-        type="button"
-        onclick="newgame.generateQuestion(newgame.lower_bound, newgame.upper_bound)"
-      >
-        Start Game
-      </button>
+      <button type="button" onclick="createNewGame()">Start Game</button>
       <br />
       <p id="questionField"></p>
-      <br>
-      <input id="answerField" size="5"/>
-      <br>
-      <button type="button" onclick="newgame.checkAnswer()">Check Answer</button>
+      <br />
+      Time left: <p id="timer" size="5"></p>
+      <br />
+      Number correct: <p id="qCorrect" size="5">0</p>
+      Enter answer:
+      <input id="answerField" size="5" />
+      <br />
+      <script>
+        document
+          .getElementById("answerField")
+          .addEventListener("input", callcheckanswer);
+
+        function callcheckanswer() {
+          setTimeout(function () {
+            newgame.checkAnswer();
+          }, 250);
+        }
+      </script>
     </div>
+
     <script>
       let newgame;
 
@@ -37,24 +48,41 @@
           this.div = div;
           this.lower_bound = lower_bound;
           this.upper_bound = upper_bound;
-          var q
+          var q;
+          this.numCorrect = 0;
+          this.generateQuestion(this.lower_bound, this.upper_bound);
+          this.countdown();
+        }
+
+        countdown() {
+          var timeleft = this.time
+          var interval = setInterval(function () {
+            timeleft--;
+            document.getElementById("timer").innerText = timeleft;
+            if (timeleft <= 0) {
+              clearInterval(interval);
+            }
+          }, 1000);
         }
 
         generateQuestion(lb, ub) {
-          this.q = new Question(lb, ub)
-          this.displayquestion(this.q)
-          document.getElementById("answerField").value = ""
-          document.getElementById("answerField").focus()
+          this.q = new Question(lb, ub);
+          this.displayquestion(this.q);
+          document.getElementById("answerField").value = "";
+          document.getElementById("answerField").focus();
         }
 
         displayquestion(q) {
-          document.getElementById("questionField").innerText = this.q.questiontext;
+          document.getElementById("questionField").innerText =
+            this.q.questiontext;
         }
 
         checkAnswer() {
-          var userinput = document.getElementById("answerField").value
+          var userinput = document.getElementById("answerField").value;
           if (userinput == this.q.answer) {
-            this.generateQuestion(this.lower_bound,this.upper_bound)
+            this.numCorrect++
+            document.getElementById("qCorrect").innerText = this.numCorrect;
+            this.generateQuestion(this.lower_bound, this.upper_bound);
           }
         }
       }
@@ -63,19 +91,19 @@
         constructor(lb, ub) {
           this.lb = lb;
           this.ub = ub;
-          this.operation = rand(1,4);
-          this.questiontext = ""
-          this.answer = 0
-          this.makeQuestion(this.lb, this.ub, this.operation)
+          this.operation = rand(1, 4);
+          this.questiontext = "";
+          this.answer = 0;
+          this.makeQuestion(this.lb, this.ub, this.operation);
         }
 
         makeQuestion(lb, ub, operation) {
-          var first_num, second_num
+          var first_num, second_num;
           if (operation == 1) {
             first_num = rand(lb, ub);
             second_num = rand(lb, ub);
             this.questiontext = first_num + " + " + second_num;
-            this.answer = first_num + second_num
+            this.answer = first_num + second_num;
           } else if (operation == 2) {
             first_num = rand(lb, ub);
             second_num = rand(lb, ub);
@@ -83,12 +111,12 @@
               first_num = rand(lb, ub);
             }
             this.questiontext = first_num + " - " + second_num;
-            this.answer = first_num - second_num
+            this.answer = first_num - second_num;
           } else if (operation == 3) {
             first_num = rand(lb, ub);
             second_num = rand(lb, ub);
             this.questiontext = first_num + " \xD7 " + second_num;
-            this.answer = first_num * second_num
+            this.answer = first_num * second_num;
           } else {
             first_num = rand(lb, ub);
             second_num = rand(lb, ub);
@@ -96,23 +124,22 @@
               first_num = rand(lb, ub);
             }
             this.questiontext = first_num + " \xF7 " + second_num;
-            this.answer = first_num / second_num
+            this.answer = first_num / second_num;
           }
         }
-
       }
 
       function rand(lower, upper) {
-        return Math.floor(Math.random() * (upper - lower + 1)) + +lower
+        return Math.floor(Math.random() * (upper - lower + 1)) + +lower;
       }
 
       function createNewGame() {
         newgame = new Game(
-          120,
+          document.getElementById("time_field").value,
           true,
           true,
-          false,
-          false,
+          true,
+          true,
           document.getElementById("lower_bound_field").value,
           document.getElementById("upper_bound_field").value
         );
