@@ -2,6 +2,10 @@
   <head>
     <title>Mental Math Trainer</title>
   </head>
+  <style>
+    body {text-align: center;}
+    #questionField {font-size: xx-large;}
+  </style>
   <body>
     <div>
       Set time:
@@ -17,7 +21,7 @@
       <input type="number" id="lower_bound_field" value="2" size="5" />
       <br />
       Set upper limit:
-      <input type="number" id="upper_bound_field" value="100" size="5" />
+      <input type="number" id="upper_bound_field" value="50" size="5" />
       <br />
       <input type="checkbox" id="mul" checked>Multiplication</label>
       <br>
@@ -29,19 +33,16 @@
       <input type="number" id="lower_bound_field_md" value="2" size="5" />
       <br />
       Set upper limit:
-      <input type="number" id="upper_bound_field_md" value="30" size="5" />
+      <input type="number" id="upper_bound_field_md" value="15" size="5" />
       <br />
       <button type="button" id="startGame" onclick="createNewGame()">Start Game</button>
       <br />
-      <p id="questionField"></p>
-      <br />
-      Time left:
-      <p id="timer" size="5"></p>
-      <br />
-      Number correct:
-      <p id="qCorrect" size="5">0</p>
-      Enter answer:
-      <input id="answerField" size="5" />
+      <p id="timer" hidden>Time left:</p>
+      <p id="qCorrect" hidden>Number correct: 0</p>
+      <p id="questionField" hidden></p>
+      <br>
+      <p id="answerText" hidden>Enter answer:</p>
+      <input id="answerField" size="10" hidden/>
       <br />
       <script></script>
     </div>
@@ -66,7 +67,7 @@
           this.updateoperations()
           this.generateQuestion(this.lower_bound, this.upper_bound, this.lower_bound_md, this.upper_bound_md, this.operations)
           this.countdown()
-          document.getElementById("timer").innerText = this.time;
+          document.getElementById("timer").innerText = "Time Left: " + this.time;
         }
 
         updateoperations() {
@@ -88,7 +89,7 @@
           var timeleft = this.time;
           var interval = setInterval(function () {
             timeleft--;
-            document.getElementById("timer").innerText = timeleft;
+            document.getElementById("timer").innerText = "Time Left: " + timeleft;
             if (timeleft <= 0) {
               clearInterval(interval);
               document.getElementById("answerField").disabled = true
@@ -114,7 +115,7 @@
           var userinput = document.getElementById("answerField").value;
           if (userinput == this.q.answer) {
             this.numCorrect++;
-            document.getElementById("qCorrect").innerText = this.numCorrect;
+            document.getElementById("qCorrect").innerText = "Number Correct: " + this.numCorrect;
             this.generateQuestion(this.lower_bound, this.upper_bound, this.lower_bound_md, this.upper_bound_md, this.operations);
           }
         }
@@ -176,6 +177,11 @@
           document.getElementById("upper_bound_field_md").value,
         );
         document.getElementById("startGame").disabled = true
+        document.getElementById("timer").hidden = false
+        document.getElementById("qCorrect").hidden = false
+        document.getElementById("questionField").hidden = false
+        document.getElementById("answerText").hidden = false
+        document.getElementById("answerField").hidden = false
       }
 
       document
